@@ -19,7 +19,7 @@ for n in range(5):
     app.route(f"/route-dyn-{n}/<part>")(req_ok)
 
 
-# then prepare endpoints for the benchmark
+# then prepare endpoints for the benchmark 
 # ----------------------------------------
 @app.route('/html')
 async def view_html(request):
