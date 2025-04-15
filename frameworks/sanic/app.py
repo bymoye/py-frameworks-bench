@@ -16,13 +16,13 @@ async def req_ok(request, part=None):
 
 
 for n in range(5):
-    app.route(f"/route-{n}")(html)
-    app.route(f"/route-dyn-{n}/<part>")(req_ok)
+    app.route(f"/route-{n}", name=f"static-route-{n}")(lambda request: html('ok'))
+    app.route(f"/route-dyn-{n}/<part>", name=f"dynamic-route-{n}")(req_ok)
 
 
 # then prepare endpoints for the benchmark
 # ----------------------------------------
-@app.route('/html')
+@app.route('/html', name="view_html")
 async def view_html(request):
     """Return HTML content and a custom header."""
     content = "<b>HTML OK</b>"
@@ -30,7 +30,7 @@ async def view_html(request):
     return html(content, headers=headers)
 
 
-@app.route('/upload', methods=['POST'])
+@app.route('/upload', methods=['POST'], name="upload_endpoint")
 async def upload(request):
     """Load multipart data and store it as a file."""
     if 'file' not in request.files:
@@ -41,7 +41,7 @@ async def upload(request):
     return text(target.name)
 
 
-@app.route('/api/users/<user:int>/records/<record:int>', methods=['PUT'])
+@app.route('/api/users/<user:int>/records/<record:int>', methods=['PUT'], name="api_endpoint")
 async def api(request, user, record):
     """Check headers for authorization, load JSON/query data and return as JSON."""
     if request.headers.get('authorization') is None:

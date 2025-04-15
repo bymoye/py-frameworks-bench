@@ -8,7 +8,7 @@ from pathlib import Path
 import jinja2
 
 
-NOW = dt.datetime.utcnow()
+NOW = dt.datetime(tzinfo=dt.UTC)
 BASEDIR = Path(__file__).parent.parent
 FRAMEWORKS = BASEDIR / 'frameworks'
 SOURCE_HTML = Path(BASEDIR / 'results/html.csv')
