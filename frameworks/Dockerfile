@@ -20,10 +20,12 @@ RUN /usr/local/bin/pip install --no-cache-dir \
 
 # 动态设置项目路径
 ARG PROJECT
-WORKDIR /app
+WORKDIR /app 
 
 # 将项目文件复制到容器中
 COPY . /app/
+
+RUN pip install -r /app/requirements.txt
 
 # 确保 start.sh 脚本可执行
 RUN chmod +x /app/start.sh
